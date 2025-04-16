@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Faculty Dashboard | QuizApp</title>
+    <style>
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: #f4f4f4;
+          padding: 30px;
+        }
+
+        .container {
+          background: white;
+          padding: 30px;
+          border-radius: 15px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+          max-width: 800px;
+          margin: auto;
+        }
+
+        h2 {
+          text-align: center;
+          color: #333;
+          margin-bottom: 30px;
+        }
+
+        input, select {
+          width: 100%;
+          padding: 10px;
+          margin: 10px 0 20px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+        }
+
+        button {
+          padding: 12px 20px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: 0.3s ease;
+        }
+
+        button:hover {
+          background-color: #45a049;
+        }
+
+        .question-block {
+          border-top: 1px solid #ddd;
+          padding-top: 20px;
+          margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Create New Quiz</h2>
+    <form id="quizForm">
+        <label>Quiz Title:</label>
+        <input type="text" id="quizTitle" required>
+
+        <label>Category:</label>
+        <input type="text" id="quizCategory" required>
+
+        <div id="questionsSection">
+            <div class="question-block">
+                <label>Question:</label>
+                <input type="text" class="question" required>
+
+                <label>Option 1:</label>
+                <input type="text" class="option1" required>
+
+                <label>Option 2:</label>
+                <input type="text" class="option2" required>
+
+                <label>Option 3:</label>
+                <input type="text" class="option3" required>
+
+                <label>Option 4:</label>
+                <input type="text" class="option4" required>
+
+                <label>Correct Answer (1-4):</label>
+                <input type="number" class="correctAnswer" min="1" max="4" required>
+            </div>
+        </div>
+
+        <button type="button" onclick="addQuestionBlock()">+ Add More Questions</button>
+        <br><br>
+        <button type="submit">Create Quiz</button>
+    </form>
+</div>
+
+<script>
+
+    useEffect(() => {
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) {
+    navigate('/login');
+  }
+}, []);
+
+
+    function addQuestionBlock() {
+      const section = document.getElementById("questionsSection");
+      const block = document.querySelector(".question-block").cloneNode(true);
+      block.querySelectorAll("input").forEach(input => input.value = "");
+      section.appendChild(block);
+    }
+
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const quizTitle = document.getElementById("quizTitle").value;
+      const quizCategory = document.getElementById("quizCategory").value;
+
+      const questionBlocks = document.querySelectorAll(".question-block");
+      const questions = [];
+
+      questionBlocks.forEach(block => {
+        const question = block.querySelector(".question").value;
+        const options = [
+          block.querySelector(".option1").value,
+          block.querySelector(".option2").value,
+          block.querySelector(".option3").value,
+          block.querySelector(".option4").value
+        ];
+        const correctAnswer = parseInt(block.querySelector(".correctAnswer").value);
+
+        questions.push({ question, options, correctAnswer });
+      });
+
+      const quizData = {
+        title: quizTitle,
+        category: quizCategory,
+        questions: questions
+      };
+
+      fetch("http://localhost:9090/quiz/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(quizData)
+      })
+      .then(response => {
+        if (response.ok) return response.text();
+        throw new Error("Quiz creation failed");
+      })
+      .then(data => {
+        alert("Quiz Created Successfully!");
+        location.reload();
+      })
+      .catch(error => {
+        alert("Error: " + error.message);
+      });
+    });
+</script>
+
+</body>
+</html>

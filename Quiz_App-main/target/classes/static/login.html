@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login | QuizApp</title>
+    <style>
+        body {
+          margin: 0;
+          font-family: 'Segoe UI', sans-serif;
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          animation: fadeIn 1s ease-in;
+        }
+
+        .container {
+          background: white;
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+          width: 100%;
+          max-width: 400px;
+          text-align: center;
+          animation: slideUp 0.7s ease-in-out;
+        }
+
+        h2 {
+          margin-bottom: 20px;
+          color: #333;
+        }
+
+        input {
+          width: 90%;
+          padding: 12px;
+          margin: 10px 0;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          font-size: 16px;
+        }
+
+        button {
+          width: 100%;
+          padding: 12px;
+          background: linear-gradient(135deg, #6a11cb, #2575fc);
+          color: white;
+          font-size: 16px;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: 0.3s ease;
+          margin-top: 10px;
+        }
+
+        button:hover {
+          transform: scale(1.05);
+          background: linear-gradient(135deg, #5b0eeb, #1d5eff);
+        }
+
+        p {
+          margin-top: 20px;
+        }
+
+        a {
+          color: #6a11cb;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+          from {opacity: 0;}
+          to {opacity: 1;}
+        }
+
+        @keyframes slideUp {
+          from {
+            transform: translateY(40px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Login to QuizApp</h2>
+    <form id="loginForm">
+        <input type="email" id="loginEmail" placeholder="Email" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up</a></p>
+</div>
+
+<script>
+    // ✅ Redirect to dashboard if already logged in
+    if (localStorage.getItem("userEmail")) {
+      window.location.href = "user-dashboard.html";
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+
+      // ✅ Email format check
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      // ✅ Password length check
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return;
+      }
+
+      // ✅ Send login request
+      fetch("http://localhost:9090/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error("Invalid email or password");
+        }
+      })
+      .then(data => {
+        alert(data);
+        localStorage.setItem("userEmail", email); // Save email locally
+        window.location.href = "user-dashboard.html"; // ✅ Redirect
+      })
+      .catch(error => {
+        alert("Login failed: " + error.message);
+      });
+    });
+</script>
+</body>
+</html>

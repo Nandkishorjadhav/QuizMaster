@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Signup | QuizMaster</title>
+    <style>
+        body {
+          margin: 0;
+          font-family: 'Segoe UI', sans-serif;
+          background: linear-gradient(135deg, #43cea2, #185a9d);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          animation: fadeIn 1s ease-in;
+        }
+
+        .container {
+          background: white;
+          padding: 40px;
+          border-radius: 20px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+          width: 100%;
+          max-width: 400px;
+          text-align: center;
+          animation: slideUp 0.7s ease-in-out;
+        }
+
+        h2 {
+          margin-bottom: 20px;
+          color: #333;
+        }
+
+        .tabs {
+          display: flex;
+          margin-bottom: 20px;
+          border-bottom: 1px solid #eee;
+        }
+
+        .tab {
+          flex: 1;
+          text-align: center;
+          padding: 12px;
+          cursor: pointer;
+          border-bottom: 3px solid #ccc;
+          font-weight: 500;
+          transition: all 0.3s ease;
+        }
+
+        .tab.active {
+          border-bottom: 3px solid #11998e;
+          color: #11998e;
+        }
+
+        input {
+          width: 90%;
+          padding: 12px;
+          margin: 10px 0;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          font-size: 16px;
+          box-sizing: border-box;
+        }
+
+        button {
+          width: 100%;
+          padding: 12px;
+          background: linear-gradient(135deg, #11998e, #38ef7d);
+          color: white;
+          font-size: 16px;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: 0.3s ease;
+          margin-top: 10px;
+        }
+
+        button:hover {
+          transform: scale(1.05);
+          background: linear-gradient(135deg, #0e7e74, #34e07a);
+        }
+
+        p {
+          margin-top: 20px;
+        }
+
+        a {
+          color: #11998e;
+          text-decoration: none;
+          font-weight: bold;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+
+        .form-container {
+          display: none;
+        }
+
+        .form-container.active {
+          display: block;
+        }
+
+        .error-message {
+          color: #e74c3c;
+          font-size: 14px;
+          margin-top: 5px;
+          margin-bottom: 10px;
+          text-align: left;
+          display: none;
+        }
+
+        .success-message {
+          color: #27ae60;
+          font-size: 16px;
+          margin-top: 15px;
+          padding: 10px;
+          background-color: #e8f8f5;
+          border-radius: 5px;
+          display: none;
+        }
+
+        @keyframes fadeIn {
+          from {opacity: 0;}
+          to {opacity: 1;}
+        }
+
+        @keyframes slideUp {
+          from {
+            transform: translateY(40px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Create Your Account</h2>
+
+    <div class="tabs">
+        <div class="tab active" id="studentTab">Student</div>
+        <div class="tab" id="facultyTab">Faculty</div>
+    </div>
+
+    <div class="form-container active" id="studentFormContainer">
+        <form id="studentSignupForm">
+            <div class="input-group">
+                <input type="text" id="studentName" placeholder="Student Full Name" required>
+                <div id="studentNameError" class="error-message"></div>
+            </div>
+            <div class="input-group">
+                <input type="email" id="studentEmail" placeholder="Student Email" required>
+                <div id="studentEmailError" class="error-message"></div>
+            </div>
+            <div class="input-group">
+                <input type="password" id="studentPassword" placeholder="Password" required>
+                <div id="studentPasswordError" class="error-message"></div>
+            </div>
+            <button type="submit">Sign Up as Student</button>
+        </form>
+        <div id="studentSuccessMessage" class="success-message"></div>
+    </div>
+
+    <div class="form-container" id="facultyFormContainer">
+        <form id="facultySignupForm">
+            <div class="input-group">
+                <input type="text" id="facultyName" placeholder="Faculty Full Name" required>
+                <div id="facultyNameError" class="error-message"></div>
+            </div>
+            <div class="input-group">
+                <input type="email" id="facultyEmail" placeholder="Faculty Email" required>
+                <div id="facultyEmailError" class="error-message"></div>
+            </div>
+            <div class="input-group">
+                <input type="password" id="facultyPassword" placeholder="Password" required>
+                <div id="facultyPasswordError" class="error-message"></div>
+            </div>
+            <div class="input-group">
+                <input type="text" id="facultyDepartment" placeholder="Department" required>
+                <div id="facultyDepartmentError" class="error-message"></div>
+            </div>
+            <button type="submit">Sign Up as Faculty</button>
+        </form>
+        <div id="facultySuccessMessage" class="success-message"></div>
+    </div>
+
+    <p>Already have an account? <a href="login.html">Log in</a></p>
+</div>
+
+<script>
+    // Tab switching
+    const studentTab = document.getElementById("studentTab");
+    const facultyTab = document.getElementById("facultyTab");
+    const studentFormContainer = document.getElementById("studentFormContainer");
+    const facultyFormContainer = document.getElementById("facultyFormContainer");
+
+    studentTab.addEventListener("click", () => {
+      studentTab.classList.add("active");
+      facultyTab.classList.remove("active");
+      studentFormContainer.classList.add("active");
+      facultyFormContainer.classList.remove("active");
+    });
+
+    facultyTab.addEventListener("click", () => {
+      facultyTab.classList.add("active");
+      studentTab.classList.remove("active");
+      facultyFormContainer.classList.add("active");
+      studentFormContainer.classList.remove("active");
+    });
+
+    const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    // Student Signup
+    document.getElementById("studentSignupForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("studentName").value.trim();
+      const email = document.getElementById("studentEmail").value.trim();
+      const password = document.getElementById("studentPassword").value.trim();
+
+      document.getElementById("studentNameError").style.display = "none";
+      document.getElementById("studentEmailError").style.display = "none";
+      document.getElementById("studentPasswordError").style.display = "none";
+
+      if (name.length < 3) {
+        document.getElementById("studentNameError").textContent = "Name must be at least 3 characters.";
+        document.getElementById("studentNameError").style.display = "block";
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        document.getElementById("studentEmailError").textContent = "Invalid email address.";
+        document.getElementById("studentEmailError").style.display = "block";
+        return;
+      }
+
+      if (password.length < 6) {
+        document.getElementById("studentPasswordError").textContent = "Password must be at least 6 characters.";
+        document.getElementById("studentPasswordError").style.display = "block";
+        return;
+      }
+
+      // Send data to backend
+      try {
+        const response = await fetch("http://localhost:9090/api/register", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+            role: "student"
+          }),
+        });
+
+        if (response.ok) {
+          document.getElementById("studentSuccessMessage").textContent = "Account created! Redirecting...";
+          document.getElementById("studentSuccessMessage").style.display = "block";
+          setTimeout(() => window.location.href = "login.html", 2000);
+        } else {
+          const err = await response.text();
+          document.getElementById("studentEmailError").textContent = err || "Signup failed.";
+          document.getElementById("studentEmailError").style.display = "block";
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Server error. Please try again later.");
+      }
+    });
+
+    // Faculty Signup
+    document.getElementById("facultySignupForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("facultyName").value.trim();
+      const email = document.getElementById("facultyEmail").value.trim();
+      const password = document.getElementById("facultyPassword").value.trim();
+      const department = document.getElementById("facultyDepartment").value.trim();
+
+      document.getElementById("facultyNameError").style.display = "none";
+      document.getElementById("facultyEmailError").style.display = "none";
+      document.getElementById("facultyPasswordError").style.display = "none";
+      document.getElementById("facultyDepartmentError").style.display = "none";
+
+      if (name.length < 3) {
+        document.getElementById("facultyNameError").textContent = "Name must be at least 3 characters.";
+        document.getElementById("facultyNameError").style.display = "block";
+        return;
+      }
+
+      if (!isValidEmail(email)) {
+        document.getElementById("facultyEmailError").textContent = "Invalid email address.";
+        document.getElementById("facultyEmailError").style.display = "block";
+        return;
+      }
+
+      if (password.length < 6) {
+        document.getElementById("facultyPasswordError").textContent = "Password must be at least 6 characters.";
+        document.getElementById("facultyPasswordError").style.display = "block";
+        return;
+      }
+
+      if (department.length < 2) {
+        document.getElementById("facultyDepartmentError").textContent = "Please enter a valid department.";
+        document.getElementById("facultyDepartmentError").style.display = "block";
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:9090/api/register", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password,
+            department: department,
+            role: "faculty"
+          }),
+        });
+
+        if (response.ok) {
+          document.getElementById("facultySuccessMessage").textContent = "Account created! Redirecting...";
+          document.getElementById("facultySuccessMessage").style.display = "block";
+          setTimeout(() => window.location.href = "login.html", 2000);
+        } else {
+          const err = await response.text();
+          document.getElementById("facultyEmailError").textContent = err || "Signup failed.";
+          document.getElementById("facultyEmailError").style.display = "block";
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Server error. Please try again later.");
+      }
+    });
+</script>
+</body>
+</html>

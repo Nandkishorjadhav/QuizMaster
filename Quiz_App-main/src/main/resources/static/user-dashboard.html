@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Dashboard | QuizApp</title>
+    <style>
+        * {
+          box-sizing: border-box;
+        }
+
+        body {
+          margin: 0;
+          font-family: 'Segoe UI', sans-serif;
+          background: linear-gradient(135deg, #1d4350, #a43931);
+          color: white;
+          min-height: 100vh;
+          animation: fadeIn 1s ease-in;
+          display: flex;
+          flex-direction: column;
+        }
+
+        #main-content {
+          flex: 1;
+        }
+
+        nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 15px 30px;
+          background: rgba(0, 0, 0, 0.4);
+          border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        nav h1 {
+          font-size: 24px;
+          color: #fff;
+        }
+
+        nav ul {
+          list-style: none;
+          display: flex;
+          gap: 20px;
+        }
+
+        nav ul li {
+          display: inline;
+        }
+
+        nav ul li a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: bold;
+          transition: color 0.3s;
+          cursor: pointer;
+        }
+
+        nav ul li a:hover {
+          color: #ffd700;
+        }
+
+        section {
+          padding: 40px 20px;
+          text-align: center;
+        }
+
+        .card, .quiz-type {
+          background: rgba(255, 255, 255, 0.1);
+          color: #fff;
+          padding: 30px;
+          margin: 20px auto;
+          border-radius: 20px;
+          width: 90%;
+          max-width: 800px;
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+          animation: slideIn 1s ease-out;
+        }
+
+        .btn {
+          padding: 12px 24px;
+          background: linear-gradient(135deg, #ff416c, #ff4b2b);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          margin: 10px;
+        }
+
+        .btn:hover {
+          transform: scale(1.05);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+          text-align: center;
+          padding: 20px;
+          background: rgba(0, 0, 0, 0.3);
+          border-top: 2px solid rgba(255, 255, 255, 0.2);
+          font-size: 14px;
+        }
+
+        .profile-info p {
+          font-size: 18px;
+          margin: 12px 0;
+        }
+
+        .profile-info span {
+          color: #ffd700;
+          font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+          from {opacity: 0;}
+          to {opacity: 1;}
+        }
+
+        @keyframes slideIn {
+          from {
+            transform: translateY(50px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        .btn-logout {
+          padding: 10px 20px;
+          background: linear-gradient(135deg, #ff416c, #ff4b2b);
+          color: white;
+          border-radius: 8px;
+          font-weight: bold;
+          border: none;
+          text-decoration: none;
+          transition: all 0.3s ease;
+          box-shadow: 0 0 10px rgba(255, 75, 43, 0.6);
+        }
+
+        .btn-logout:hover {
+          background: linear-gradient(135deg, #ff4b2b, #ff416c);
+          box-shadow: 0 0 20px rgba(255, 75, 43, 0.9);
+          transform: scale(1.05);
+        }
+
+        .quiz-section {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+<!--            background: linear-gradient(to right, #f0f0f0, #ffffff);-->
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-section h3 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .quiz-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-buttons button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .quiz-buttons button:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <h1>QuizApp</h1>
+    <ul>
+        <li><a href="#" onclick="showSection('home')">Home</a></li>
+<!--        <li><a href="user-profile.html" >Profile</a></li>-->
+        <li><a href="#" onclick="showSection('profile')">Profile</a></li>
+        <li><a href="QuizesSection.html">Quizzes</a></li>
+        <li><a href="#" onclick="showSection('about')">About</a></li>
+        <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+        <li><a href="#" class="btn-logout" onclick="logout()">Logout</a></li>
+    </ul>
+
+</nav>
+
+<div id="main-content">
+
+    <!-- Home Section -->
+    <section id="home" class="card">
+        <h2>Hello, <span id="userWelcome">User</span>! 👋</h2>
+        <p>Welcome back to QuizApp. Ready to challenge your brain today? 💡</p>
+
+        <div style="margin-top: 30px;">
+            <h3>🔥 Quick Stats</h3>
+            <p>Quizzes Attempted: <span id="quizCount">5</span></p>
+            <p>Average Score: <span id="avgScore">82%</span></p>
+        </div>
+
+        <div class="quiz-section">
+            <h3>🚀 Jump Into a Quiz</h3>
+            <div class="quiz-buttons">
+                <button onclick="startQuiz('JavaScript')">JavaScript</button>
+                <button onclick="startQuiz('SQL')">SQL</button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" class="card hidden">
+        <h2>User Profile</h2>
+        <div class="profile-info">
+            <p><strong>Username:</strong> <span id="username">Loading...</span></p>
+            <p><strong>Email:</strong> <span id="email">Loading...</span></p>
+            <p><strong>Role:</strong> <span id="role">Loading...</span></p>
+        </div>
+    </section>
+
+    <!-- Quizzes Section -->
+    <section id="quizzes" class="hidden">
+        <div class="quiz-type"><h3>Java Quiz</h3><p>Test your Java programming skills.</p><button class="btn" onclick="startQuiz('java')">Start Java Quiz</button></div>
+        <div class="quiz-type"><h3>Python Quiz</h3><p>Challenge your Python skills.</p><button class="btn" onclick="startQuiz('python')">Start Python Quiz</button></div>
+        <div class="quiz-type"><h3>SQL Quiz</h3><p>Put your SQL knowledge to the test!</p><button class="btn" onclick="startQuiz('sql')">Start SQL Quiz</button></div>
+        <div class="quiz-type"><h3>JavaScript Quiz</h3><p>Master your JavaScript understanding.</p><button class="btn" onclick="startQuiz('javascript')">Start JavaScript Quiz</button></div>
+        <div class="quiz-type"><h3>C++ Quiz</h3><p>Sharpen your C++ fundamentals.</p><button class="btn" onclick="startQuiz('cpp')">Start C++ Quiz</button></div>
+        <div class="quiz-type"><h3>MongoDB Quiz</h3><p>Explore NoSQL with MongoDB!</p><button class="btn" onclick="startQuiz('mongodb')">Start MongoDB Quiz</button></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="card hidden">
+        <h3>About QuizApp</h3>
+        <p>QuizApp helps students prepare for programming interviews and tests by offering topic-wise quizzes.</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="card hidden">
+        <h3>Contact Us</h3>
+        <p>Email us at: <strong>support@quizapp.com</strong></p>
+    </section>
+
+</div>
+
+<!-- Footer -->
+<footer>
+    &copy; 2025 QuizApp. All rights reserved.
+</footer>
+
+<script>
+    // Simulated user data
+    const user = {
+      username: localStorage.getItem("userName") || "nandkishor123",
+      email: "nandkishor@example.com",
+      role: "Student"
+    };
+
+    document.getElementById("userWelcome").innerText = user.username;
+    document.getElementById("username").innerText = user.username;
+    document.getElementById("email").innerText = user.email;
+    document.getElementById("role").innerText = user.role;
+
+    function logout() {
+      localStorage.clear();
+      alert("Logged out successfully!");
+      window.location.href = "index.html"; // Redirect to main homepage
+    }
+
+    function startQuiz(subject) {
+      window.location.href = `quiz.html?category=${subject}`;
+    }
+
+    function showSection(id) {
+      const sections = document.querySelectorAll("section");
+      sections.forEach(section => {
+        section.classList.add("hidden");
+      });
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    const stats = {
+      quizCount: 5,
+      avgScore: "82%"
+    };
+
+    document.getElementById("quizCount").innerText = stats.quizCount;
+    document.getElementById("avgScore").innerText = stats.avgScore;
+
+    showSection("home");
+
+    if (!localStorage.getItem("userEmail")) {
+      window.location.href = "login.html";
+    }
+</script>
+
+</body>
+</html>

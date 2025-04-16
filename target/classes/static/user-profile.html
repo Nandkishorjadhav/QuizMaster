@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Profile</title>
+    <style>
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: linear-gradient(to right, #667eea, #764ba2);
+          margin: 0;
+          padding: 0;
+          color: #333;
+        }
+
+        .profile-container {
+          max-width: 800px;
+          margin: 50px auto;
+          padding: 30px;
+          background: #fff;
+          border-radius: 15px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .profile-container h2 {
+          text-align: center;
+          margin-bottom: 20px;
+          color: #764ba2;
+        }
+
+        .profile-card p {
+          font-size: 18px;
+          margin: 15px 0;
+          color: #444;
+        }
+
+        .profile-card span {
+          color: #007bff;
+        }
+
+        #home {
+          margin-top: 40px;
+          padding: 30px;
+          background: #f9f9f9;
+          border-radius: 15px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #home h2 {
+          color: #4b0082;
+          font-size: 26px;
+        }
+
+        #home p {
+          font-size: 18px;
+          color: #333;
+        }
+
+        .quiz-section {
+          margin-top: 30px;
+          text-align: center;
+          padding: 20px;
+          background: linear-gradient(to right, #f0f0f0, #ffffff);
+          border-radius: 16px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-section h3 {
+          font-size: 24px;
+          color: #333;
+          margin-bottom: 20px;
+        }
+
+        .quiz-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          flex-wrap: wrap;
+        }
+
+        .quiz-buttons button {
+          background: #4CAF50;
+          color: white;
+          border: none;
+          padding: 12px 24px;
+          font-size: 16px;
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .quiz-buttons button:hover {
+          background: #45a049;
+          transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+<div class="profile-container">
+    <h2>User Profile</h2>
+    <div class="profile-card">
+        <p><strong>Username:</strong> <span id="username">Loading...</span></p>
+        <p><strong>Email:</strong> <span id="email">Loading...</span></p>
+        <p><strong>Role:</strong> <span id="role">Loading...</span></p>
+    </div>
+
+    <section id="home" class="card">
+        <h2>Hello, <span id="userWelcome">User</span>! 👋</h2>
+        <p>Welcome back to QuizApp. Ready to challenge your brain today? 💡</p>
+
+        <div style="margin-top: 30px;">
+            <h3>🔥 Quick Stats</h3>
+            <p>Quizzes Attempted: <span id="quizCount">5</span></p>
+            <p>Average Score: <span id="avgScore">82%</span></p>
+        </div>
+
+<!--        <div class="quiz-section">-->
+<!--            <h3>🚀 Jump Into a Quiz</h3>-->
+<!--            <div class="quiz-buttons">-->
+<!--                <button onclick="startQuiz('JavaScript')">JavaScript</button>-->
+<!--                <button onclick="startQuiz('SQL')">SQL</button>-->
+<!--            </div>-->
+<!--        </div>-->
+    </section>
+</div>
+
+<script>
+    // Simulated user data — you can replace this with an API call or session data
+    const user = {
+      username: "nandkishor123",
+      email: "nandkishor@example.com",
+      role: "Student"
+    };
+
+    // Load user info into DOM
+    window.onload = function () {
+      document.getElementById("username").textContent = user.username;
+      document.getElementById("email").textContent = user.email;
+      document.getElementById("role").textContent = user.role;
+      document.getElementById("userWelcome").textContent = user.username;
+    };
+
+    function startQuiz(topic) {
+      alert("Starting quiz on: " + topic);
+      // Redirect or load quiz logic here
+    }
+</script>
+</body>
+</html>

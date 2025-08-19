@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> c1b7af3 (Initial commit)
+
 # 🎯 QuizApp - Sharpen Your Skills with Fun Quizzes
 
 **QuizApp** is a full-stack web application that allows users to test their knowledge across programming topics like Java, JavaScript, SQL, Python, C++, and more.  
@@ -72,13 +69,10 @@ Contributions are welcome!
 2. Create a feature branch
 3. Push your changes
 4. Open a pull request
-5. 
 ---
 
 > 💡 *“Practice is the key to mastery. Take at least one quiz a day to stay sharp!”*
-<<<<<<< HEAD
-=======
-=======
+
 # Spring Boot Quiz App 
 
 
@@ -118,5 +112,4 @@ spring.datasource.username=username
 spring.datasource.password=password
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
->>>>>>> a1cf096 (Initial commit)
->>>>>>> c1b7af3 (Initial commit)
+
